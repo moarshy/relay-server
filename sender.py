@@ -10,8 +10,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 NODE_ID = "node_1"
-URI = f"ws://3.87.119.217:8765/ws/{NODE_ID}"
-CHUNK_SIZE = 256 * 1024  # Increase chunk size for faster transfer
+CHUNK_SIZE = 256 * 1024
 
 
 def encode_file_data(file_path: str) -> str:
@@ -84,4 +83,6 @@ async def interactive_mode(file_path: str):
 if __name__ == "__main__":
     import sys
     file_path = sys.argv[1] if len(sys.argv) > 1 else 'output.png'
+    uri = sys.argv[2] if len(sys.argv) > 2 else 'ws://localhost:8765/ws'
+    uri = f"{uri}/{NODE_ID}"
     asyncio.run(interactive_mode(file_path))

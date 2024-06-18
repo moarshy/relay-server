@@ -17,7 +17,6 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 NODE_ID = "node_2"
-URI = f"ws://3.87.119.217:8765/ws/{NODE_ID}"
 CHUNK_SIZE = 256 * 1024  # Ensure the receiver uses the same chunk size
 TEMP_FILES = {}
 BASE_OUTPUT_DIR = "."
@@ -141,7 +140,10 @@ async def websocket_handler(uri):
 
 # Start the event loop
 async def main():
-    await websocket_handler(URI)
+    import sys
+    uri = sys.argv[1] if len(sys.argv) > 1 else f'ws://localhost:8765/ws'
+    uri = f"{uri}/{NODE_ID}"
+    await websocket_handler(uri=uri)
 
 if __name__ == "__main__":
     asyncio.run(main())
